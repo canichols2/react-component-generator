@@ -1,11 +1,11 @@
 {
-  "name": "react-component-generator",
-  "displayName": "React Component Generator",
+  "name": "react-component-generator-appss-fork",
+  "displayName": "React Component Generator (APPSS)",
   "description": "Generates files needed for new React components",
   "author": {
-    "name": "AndrewMcGoveran"
+    "name": "Cody Nichols"
   },
-  "version": "1.0.6",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.51.0"
   },
@@ -18,8 +18,8 @@
     "generator",
     "typescript"
   ],
-  "publisher": "AndrewMcGoveran",
-  "bugs:url": "https://github.com/andrewmcgov/react-component-generator/issues",
+  "publisher": "Cody Nichols",
+  "bugs:url": "",
   "activationEvents": [
     "onCommand:extension.generateComponent",
     "onCommand:extension.generateStories"
