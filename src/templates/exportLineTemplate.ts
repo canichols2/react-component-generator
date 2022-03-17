@@ -1,8 +1,17 @@
+import { ExportStringType } from './../types/ExportStringType';
 export function exportLineTemplate(
   componentName: string,
-  componentsFolderIndex?: boolean
+  exportType: ExportStringType,
 ) {
-  return componentsFolderIndex
-    ? `export {${componentName}} from './${componentName}';\n`
-    : `export * from './${componentName}';\n`;
+  switch (exportType) {
+    case ExportStringType.BarrelFileDefaultExportAs:
+      return `export {default as ${componentName}} from './${componentName}';\n`;
+
+    case ExportStringType.BarrelFileNamedExportFrom:
+      return `export {${componentName}} from './${componentName}';\n`;
+
+    case ExportStringType.BarrelFileNamedExportFrom:
+    default:
+      return `export * from './${componentName}';\n`;
+  }
 }

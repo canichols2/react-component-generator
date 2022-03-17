@@ -1,20 +1,18 @@
+import * as vscode from 'vscode';
 import { StyleLanguage } from '../types';
 
 export function reactFunctionComponentTemplate(
   componentName: string,
-  stylesLanguage: StyleLanguage = StyleLanguage.scss
+  stylesLanguage: StyleLanguage = StyleLanguage.scss,
 ) {
   return `
 import React from 'react';
 
-import styles from './${componentName}.${stylesLanguage}';
+import styles from './${componentName}.module.${stylesLanguage}';
+import { ${componentName}Props } from './${componentName}.ts'
 
-export interface ${componentName}Props {
-  prop?: string;
-}
-
-export function ${componentName}({prop = 'default value'}: ${componentName}Props) {
-  return <div className={styles.${componentName}}>${componentName} {prop}</div>;
+export const ${componentName} = ({}: ${componentName}Props) => {
+  return <div className={styles.${componentName}}>${componentName}</div>;
 }
 `.trimLeft();
 }

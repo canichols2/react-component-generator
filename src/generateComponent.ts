@@ -1,4 +1,4 @@
-import {window, Uri} from 'vscode';
+import { window, Uri } from 'vscode';
 
 import {
   writeFile,
@@ -14,10 +14,12 @@ import {
   stylesTemplate,
   storiesTemplate,
 } from './templates';
-import {Language, StyleLanguage} from './types';
+import { Language, StyleLanguage } from './types';
+import { ExportStringType } from './types/ExportStringType';
+import { reactFunctionComponentTypesTemplate } from './templates/reactFunctionComponentTypesTemplate';
 
 async function directoryToAddComponent(uri: Uri) {
-  const {path} = uri;
+  const { path } = uri;
 
   // If user clicked on a components folder, we want to add our new component there
   if (path.endsWith('components')) {
@@ -53,34 +55,28 @@ async function writeComponentsFolderIndexFile(
     writeFile(
       componentsFolderIndexPath,
       componentsFolderIndexContents.concat(
-        exportLineTemplate(componentName, true)
+        exportLineTemplate(componentName, ExportStringType.BarrelFileNamedExportFrom)
       )
     );
   } else {
     writeFile(
       componentsFolderIndexPath,
-      exportLineTemplate(componentName, true)
+      exportLineTemplate(componentName, ExportStringType.BarrelFileNamedExportFrom)
     );
   }
 }
 
 async function writeComponentFiles(directory: string, componentName: string) {
   const language = getSetting<Language>('language', Language.typeScript);
-  const stylesLanguage = getSetting<StyleLanguage>(
-    'stylesLanguage',
-    StyleLanguage.scss
-  );
+  const stylesLanguage = getSetting<StyleLanguage>('stylesLanguage', StyleLanguage.scss);
   const createStoriesFile = getSetting<boolean>('createStoriesFile', false);
-  const verboseStoriesComments = getSetting<boolean>(
-    'verboseStoriesComments',
-    true
-  );
+  const verboseStoriesComments = getSetting<boolean>('verboseStoriesComments', true);
   const useIndexFile = getSetting<boolean>('useIndexFile', true);
 
   // Write index file
   writeFile(
     `${directory}/${componentName}/index.${language}`,
-    exportLineTemplate(componentName)
+    exportLineTemplate(componentName, ExportStringType.BarrelFileNamedExportFrom)
   );
 
   // Write component file
@@ -89,16 +85,22 @@ async function writeComponentFiles(directory: string, componentName: string) {
     componentPath,
     reactFunctionComponentTemplate(componentName, stylesLanguage)
   );
+  // Write types file
+  const componentTypesPath = `${directory}/${componentName}/${componentName}Types.${language}`;
+  writeFile(
+    componentTypesPath,
+    reactFunctionComponentTypesTemplate(componentName, stylesLanguage)
+  );
 
   // Write style file
   writeFile(
-    `${directory}/${componentName}/${componentName}.${stylesLanguage}`,
+    `${directory}/${componentName}/${componentName}.module.${stylesLanguage}`,
     stylesTemplate(componentName)
   );
 
   // Write test file
   writeFile(
-    `${directory}/${componentName}/tests/${componentName}.test.${language}x`,
+    `${directory}/${componentName}/__tests__/${componentName}.test.${language}x`,
     testFileTemplate(componentName)
   );
 
