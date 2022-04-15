@@ -9,7 +9,7 @@ export function reactFunctionComponentTemplate(
 import React from 'react';
 
 import styles from './${componentName}.module.${stylesLanguage}';
-import { ${componentName}Props } from './${componentName}.ts'
+import { ${componentName}Props } from './${componentName}Types'
 
 export const ${componentName} = ({}: ${componentName}Props) => {
   return <div className={styles.${componentName}}>${componentName}</div>;
