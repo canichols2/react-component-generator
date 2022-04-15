@@ -5,7 +5,7 @@
   "author": {
     "name": "Cody Nichols"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.51.0"
   },
@@ -107,6 +107,7 @@
   "homepage": "https://github.com/andrewmcgov/react-component-generator/blob/main/README.md",
   "license": "SEE LICENSE IN LICENSE.txt",
   "scripts": {
+    "packageForVSCode":"yarn run  vsce package",
     "vscode:prepublish": "yarn run package",
     "compile": "webpack --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
     "watch": "webpack --watch --devtool nosources-source-map --info-verbosity verbose --config ./build/node-extension.webpack.config.js",
@@ -131,9 +132,9 @@
     "prettier": "2.2.0",
     "ts-loader": "^8.0.3",
     "typescript": "^4.0.2",
+    "vsce": "^2.7.0",
     "vscode-test": "^1.4.0",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "vsce": "^1.84.0"
+    "webpack-cli": "^3.3.12"
   }
 }
